@@ -21,6 +21,7 @@ jobs:
           apt install libx264-dev libx265-dev libnuma-dev libvpx-dev libfdk-aac-dev libopus-dev libaom-dev libdav1d-dev libunistring-dev libyuv-dev -y
           apt install devscripts debhelper -y
         run:
+          chmod +x build.sh
           ./build.sh
     - name: Collect artifacts
       uses: actions/upload-artifact@v3
