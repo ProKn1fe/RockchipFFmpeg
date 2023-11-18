@@ -1,0 +1,34 @@
+name: Build ffmpeg with rockchip mpp support
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-ffmpeg:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@latest
+    - name: Run commands
+      uses: uraimo/run-on-arch-action@latest
+      id: runcmd
+      with:
+        arch: aarch64
+        distro: ubuntu_latest
+        install: |
+          apt install autoconf automake build-essential cmake git-core libass-dev libfreetype6-dev libgnutls28-dev libmp3lame-dev libsdl2-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev meson ninja-build pkg-config texinfo wget yasm zlib1g-dev -y
+          apt install libx264-dev libx265-dev libnuma-dev libvpx-dev libfdk-aac-dev libopus-dev libaom-dev libdav1d-dev libunistring-dev libyuv-dev -y
+          apt install devscripts debhelper -y
+        run:
+          ./build.sh
+    - name: Collect artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ffmpeg binary
+        path: |
+          FFmpeg/ffmpeg
+          FFmpeg/ffmpeg_g
+          FFmpeg/ffplay
+          FFmpeg/ffplay_g
+          FFmpeg/ffprobe
+          FFmpeg/ffprobe_g
