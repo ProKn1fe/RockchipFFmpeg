@@ -4,7 +4,7 @@
 git clone https://github.com/rockchip-linux/mpp.git -b develop
 cd mpp
 cmake CMakeLists.txt
-make
+make -j$(nproc)
 make install
 cd ..
 
@@ -44,5 +44,5 @@ PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./conf
 	--enable-rkmpp \
 	--enable-version3 \
 	--enable-libdrm && \
-PATH="$HOME/bin:$PATH" make -j4 && \
+PATH="$HOME/bin:$PATH" make -j$(nproc) && \
 make install
