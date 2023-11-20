@@ -23,6 +23,7 @@ jobs:
         run: |
           chmod +x build.sh
           ./build.sh
+          tar czvf ffmpeg.tar.gz -T release_files.txt
     - name: Collect artifacts
       uses: actions/upload-artifact@v3
       with:
@@ -34,3 +35,7 @@ jobs:
           FFmpeg/ffplay_g
           FFmpeg/ffprobe
           FFmpeg/ffprobe_g
+    - name: Publish release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: "*.tar.gz"
