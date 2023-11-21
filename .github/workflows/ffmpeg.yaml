@@ -35,7 +35,11 @@ jobs:
           FFmpeg/ffplay_g
           FFmpeg/ffprobe
           FFmpeg/ffprobe_g
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%d-%m-%Y')"
     - name: Publish release
       uses: softprops/action-gh-release@v1
       with:
         files: "*.tar.gz"
+        tag_name: release-${{ steps.date.outputs.date }}
